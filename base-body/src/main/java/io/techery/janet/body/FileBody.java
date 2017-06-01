@@ -31,26 +31,10 @@ public class FileBody extends ActionBody {
         StreamUtil.writeAll(getContent(), os, StreamUtil.DISK_CHUNK_SIZE);
     }
 
-    @Override public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-
-        FileBody fileBody = (FileBody) o;
-
-        return file.equals(fileBody.file);
-    }
-
-    @Override public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + file.hashCode();
-        return result;
-    }
-
     @Override public String toString() {
         return "FileBody{" +
                 "file=" + file +
                 ", mimeType='" + mimeType() + '\'' +
-                "} " + super.toString();
+                "} ";
     }
 }

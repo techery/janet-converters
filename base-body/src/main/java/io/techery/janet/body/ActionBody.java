@@ -27,19 +27,6 @@ public abstract class ActionBody {
 
     public abstract void writeContentTo(OutputStream os) throws IOException;
 
-    @Override public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ActionBody that = (ActionBody) o;
-
-        return mimeType != null ? mimeType.equals(that.mimeType) : that.mimeType == null;
-    }
-
-    @Override public int hashCode() {
-        return mimeType != null ? mimeType.hashCode() : 0;
-    }
-
     @Override public String toString() {
         return "ActionBody{" +
                 "mimeType='" + mimeType + '\'' +

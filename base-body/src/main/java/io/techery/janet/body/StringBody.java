@@ -16,6 +16,7 @@ public class StringBody extends BytesArrayBody {
     @Override public String toString() {
         return "StringBody{" +
                 "string='" + string + '\'' +
+                ", mimeType='" + mimeType() + '\'' +
                 '}';
     }
 

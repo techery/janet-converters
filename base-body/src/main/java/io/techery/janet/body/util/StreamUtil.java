@@ -35,7 +35,7 @@ public final class StreamUtil {
         }
     }
 
-    public static String toString(InputStream is) {
+    public static String convertToString(InputStream is) {
         ByteArrayOutputStream result = new ByteArrayOutputStream();
         try {
             writeAll(is, result, STRING_CHUNK_SIZE);

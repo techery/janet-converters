@@ -4,7 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Arrays;
 
 public class BytesArrayBody extends ActionBody {
 
@@ -28,25 +27,10 @@ public class BytesArrayBody extends ActionBody {
         os.write(bytes);
     }
 
-    @Override public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-
-        BytesArrayBody that = (BytesArrayBody) o;
-
-        return Arrays.equals(bytes, that.bytes);
-    }
-
-    @Override public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + Arrays.hashCode(bytes);
-        return result;
-    }
-
     @Override public String toString() {
         return "BytesArrayBody{" +
                 "bytes length=" + length() +
-                "} " + super.toString();
+                ", mimeType='" + mimeType() + '\'' +
+                "} ";
     }
 }
