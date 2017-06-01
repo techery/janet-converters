@@ -1,21 +1,14 @@
 package io.techery.janet.body;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
-
-import io.techery.janet.body.util.MimeUtil;
 
 public abstract class ActionBody {
 
     public static final String MIMETYPE_UNKNOWN = "application/unknown";
 
     private final String mimeType;
-    private byte[] bytes;
-    private long length;
 
     public ActionBody(String mimeType) {
         if (mimeType == null) {
@@ -24,73 +17,20 @@ public abstract class ActionBody {
         this.mimeType = mimeType;
     }
 
-    public abstract byte[] getContent() throws IOException;
-
-    private byte[] bytes() {
-        if (bytes == null) {
-            try {
-                bytes = getContent();
-                if (bytes == null) {
-                    throw new NullPointerException("bytes");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            if (bytes == null) bytes = new byte[0];
-        }
-        return bytes;
-    }
-
-    public String fileName() {
-        return null;
-    }
-
-    public String mimeType() {
+    public final String mimeType() {
         return mimeType;
     }
 
-    public InputStream in() throws IOException {
-        return new ByteArrayInputStream(bytes());
-    }
+    public abstract long length();
 
-    public long length() {
-        if (length > 0) {
-            return length;
-        }
-        length = bytes().length;
-        return length;
-    }
+    public abstract InputStream getContent() throws IOException;
 
-    public void writeTo(OutputStream out) throws IOException {
-        out.write(bytes());
-    }
-
-    @Override public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ActionBody that = (ActionBody) o;
-
-        if (!Arrays.equals(bytes(), that.bytes())) return false;
-        if (!mimeType.equals(that.mimeType)) return false;
-
-        return true;
-    }
-
-    @Override public int hashCode() {
-        int result = mimeType.hashCode();
-        result = 31 * result + Arrays.hashCode(bytes());
-        return result;
-    }
+    public abstract void writeContentTo(OutputStream os) throws IOException;
 
     @Override public String toString() {
-        String bodyCharset = MimeUtil.parseCharset(mimeType);
-        try {
-            return new String(bytes(), bodyCharset);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return "ByteArrayBody[length=" + length() + "]";
+        return "ActionBody{" +
+                "mimeType='" + mimeType + '\'' +
+                '}';
     }
 
 }

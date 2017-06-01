@@ -34,7 +34,7 @@ public class ProtobufConverter implements Converter {
 
         try {
             Method parseFrom = c.getMethod("parseFrom", InputStream.class);
-            return parseFrom.invoke(null, body.in());
+            return parseFrom.invoke(null, body.getContent());
         } catch (InvocationTargetException e) {
             throw ConverterException.forDeserialization(new RuntimeException(c.getName() + ".parseFrom() failed", e.getCause()));
         } catch (NoSuchMethodException e) {

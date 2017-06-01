@@ -1,6 +1,5 @@
 package io.techery.janet.body;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 public class StringBody extends BytesArrayBody {
@@ -10,7 +9,15 @@ public class StringBody extends BytesArrayBody {
 
     public StringBody(String string) {
         super(MIMETYPE, convertToBytes(string));
+        if (string == null) throw new IllegalArgumentException("String is null");
         this.string = string;
+    }
+
+    @Override public String toString() {
+        return "StringBody{" +
+                "string='" + string + '\'' +
+                ", mimeType='" + mimeType() + '\'' +
+                '}';
     }
 
     private static byte[] convertToBytes(String string) {
@@ -20,17 +27,4 @@ public class StringBody extends BytesArrayBody {
             throw new RuntimeException(e);
         }
     }
-
-    public String getString() {
-        return string;
-    }
-
-    @Override public String toString() {
-        try {
-            return "StringBody[" + new String(getContent(), "UTF-8") + "]";
-        } catch (IOException e) {
-            throw new AssertionError("Must be able to decode UTF-8");
-        }
-    }
-
 }

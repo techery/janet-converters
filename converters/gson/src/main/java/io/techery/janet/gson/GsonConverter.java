@@ -1,15 +1,16 @@
 package io.techery.janet.gson;
 
 import com.google.gson.Gson;
-import io.techery.janet.body.ActionBody;
-import io.techery.janet.body.BytesArrayBody;
-import io.techery.janet.converter.Converter;
-import io.techery.janet.converter.ConverterException;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
+
+import io.techery.janet.body.ActionBody;
+import io.techery.janet.body.BytesArrayBody;
+import io.techery.janet.converter.Converter;
+import io.techery.janet.converter.ConverterException;
 
 public class GsonConverter implements Converter {
     private final Gson gson;
@@ -28,7 +29,7 @@ public class GsonConverter implements Converter {
         String charset = this.charset;
         InputStreamReader isr = null;
         try {
-            isr = new InputStreamReader(body.in(), charset);
+            isr = new InputStreamReader(body.getContent(), charset);
             return gson.fromJson(isr, type);
         } catch (Throwable e) {
             throw ConverterException.forDeserialization(e);
