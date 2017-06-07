@@ -19,6 +19,10 @@ public class FileBody extends ActionBody {
         this.file = file;
     }
 
+    public File getFile() {
+        return file;
+    }
+
     @Override public long length() {
         return file.length();
     }
